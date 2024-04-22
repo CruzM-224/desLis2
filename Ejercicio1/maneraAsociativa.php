@@ -9,33 +9,35 @@
 <body>
 	<h1>Datos</h1>
 
-	<div>
-		<table class="table">
+	<div class="container m-3 mx-5">
+		<table class="table table-sm">
 		  <thead>
 		    <tr>
-		      <th scope="col">#</th>
-		      <th scope="col">First</th>
-		      <th scope="col">Last</th>
-		      <th scope="col">Handle</th>
+		      <th scope="row" colspan="2">
+		    	<select class="form-select" id="selectIdioma">
+				  <option selected value="0">Idioma</option>
+				  <option value="1">Ingles</option>
+				  <option value="2">Frances</option>
+				  <option value="3">Mandarin</option>
+				  <option value="4">Ruso</option>
+				  <option value="5">Portugues</option>
+				  <option value="6">Japones</option>
+				</select>
+		      </th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>@mdo</td>
+		      <th>Basico</th>
+		      <td id="basico">#</td>
 		    </tr>
 		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
+		      <th>Intermedio</th>
+		      <td id="intermedio">#</td>
 		    </tr>
 		    <tr>
-		      <th scope="row">3</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
+		      <th>Avanzado</th>
+		      <td id="avanzado">#</td>
 		    </tr>
 		  </tbody>
 		</table>
@@ -43,44 +45,67 @@
 	<!-- Datos Prueba-->
 	<?php
 		$alumnos = array(
-			"Inglés" => array
+			"Ingles" => array
 			(
-				'Básico' => 25,
+				'Basico' => 25,
 				'Intermedio' => 15,
 				'Avanzado' => 10 
 			),
-			"Francés" => array
+			"Frances" => array
 			(
-				'Básico' => 10,
+				'Basico' => 10,
 				'Intermedio' => 5,
 				'Avanzado' => 2 
 			),
 			"Mandarin" => array
 			(
-				'Básico' => 8,
+				'Basico' => 8,
 				'Intermedio' => 4,
 				'Avanzado' => 1 
 			),
 			"Ruso" => array
 			(
-				'Básico' => 12,
+				'Basico' => 12,
 				'Intermedio' => 8,
 				'Avanzado' => 4 
 			),
-			"Portugués" => array
+			"Portugues" => array
 			(
-				'Básico' => 30,
+				'Basico' => 30,
 				'Intermedio' => 15,
 				'Avanzado' => 10 
 			),
-			"Japonés" => array
+			"Japones" => array
 			(
-				'Básico' => 90,
+				'Basico' => 90,
 				'Intermedio' => 25,
 				'Avanzado' => 67 
 			)
 		);
 	?>
+
+	<script>
+        const alumnos = <?php echo json_encode($alumnos); ?>;
+
+        document.getElementById('selectIdioma').addEventListener('change', function() {
+
+        	if (this.value == 0) {
+        		document.getElementById('basico').textContent = "";
+	            document.getElementById('intermedio').textContent = "";
+	            document.getElementById('avanzado').textContent = "";
+        	}else{
+        		const idioma = this.options[this.selectedIndex].text;
+	            const datos = alumnos[idioma];
+
+	            document.getElementById('basico').textContent = datos['Basico'];
+	            document.getElementById('intermedio').textContent = datos['Intermedio'];
+	            document.getElementById('avanzado').textContent = datos['Avanzado'];
+	        	}
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
