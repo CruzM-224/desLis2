@@ -40,7 +40,7 @@
 		  </tbody>
 		</table>
 	</div>
-	<!-- Datos -->
+	<!-- Datos Prueba-->
 	<?php
 		$alumnos = array(
 			"Inglés" => array
