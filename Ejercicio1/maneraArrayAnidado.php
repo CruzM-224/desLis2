@@ -45,41 +45,29 @@
 	<!-- Datos Prueba-->
 	<?php
 		$alumnos = array(
-			"Ingles" => array
+			array
 			(
-				'Basico' => 25,
-				'Intermedio' => 15,
-				'Avanzado' => 10 
+				25,15,10 
 			),
-			"Frances" => array
+			array
 			(
-				'Basico' => 10,
-				'Intermedio' => 5,
-				'Avanzado' => 2 
+				10,5,2 
 			),
-			"Mandarin" => array
+			array
 			(
-				'Basico' => 8,
-				'Intermedio' => 4,
-				'Avanzado' => 1 
+				8,4,1 
 			),
-			"Ruso" => array
+			array
 			(
-				'Basico' => 12,
-				'Intermedio' => 8,
-				'Avanzado' => 4 
+				12,8,4 
 			),
-			"Portugues" => array
+			array
 			(
-				'Basico' => 30,
-				'Intermedio' => 15,
-				'Avanzado' => 10 
+				30,15,10 
 			),
-			"Japones" => array
+			array
 			(
-				'Basico' => 90,
-				'Intermedio' => 25,
-				'Avanzado' => 67 
+				90,25,67 
 			)
 		);
 	?>
@@ -94,12 +82,12 @@
 	            document.getElementById('intermedio').textContent = "";
 	            document.getElementById('avanzado').textContent = "";
         	}else{
-        		const idioma = this.options[this.selectedIndex].text;
+        		const idioma = this.value - 1;
 	            const datos = alumnos[idioma];
 
-	            document.getElementById('basico').textContent = datos['Basico'];
-	            document.getElementById('intermedio').textContent = datos['Intermedio'];
-	            document.getElementById('avanzado').textContent = datos['Avanzado'];
+	            document.getElementById('basico').textContent = datos[0];
+	            document.getElementById('intermedio').textContent = datos[1];
+	            document.getElementById('avanzado').textContent = datos[2];
 	        	}
         });
     </script>
