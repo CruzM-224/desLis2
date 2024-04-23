@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 </head>
 <body>
   <div class="container mt-3">
-    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
       <div class="mb-3">
         <label for="nombreAutor" class="form-label">Autor</label>
         <input type="text" class="form-control" id="nombreAutor" name="nombreAutor" aria-describedby="descNombre">
@@ -69,7 +70,40 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    // Definir la clase Libro antes de iniciar la sesión
+    class Libro {
+        public $autor;
+        public $titulo;
+        public $edicion;
+        public $lugar;
+        public $editorial;
+        public $anio;
+        public $paginas;
+        public $notas;
+        public $isbn;
+
+        function __construct($autor, $titulo, $edicion, $lugar, $editorial, $anio, $paginas, $notas, $isbn) {
+            $this->autor = $autor;
+            $this->titulo = $titulo;
+            $this->edicion = $edicion;
+            $this->lugar = $lugar;
+            $this->editorial = $editorial;
+            $this->anio = $anio;
+            $this->paginas = $paginas;
+            $this->notas = $notas;
+            $this->isbn = $isbn;
+        }
+    }
+
+    // Iniciar la sesión solo si no está activa, evitando la aparición del error
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $Libros = isset($_SESSION['Libros']) ? $_SESSION['Libros'] : array();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
       // Validación de campos utilizando expresiones regulares
 
       // Función para validar el formato del autor
@@ -89,7 +123,7 @@
       // Función para validar el formato del número de edición
       function validarEdicion($edicion) {
           // Expresión regular para el formato del número de edición
-          $patron = "/^\[[0-9]+<sup>er<\/sup>\]$/i";
+          $patron = "/^[0-9]+<sup>er<\/sup>$/i";
           return preg_match($patron, $edicion);
       }
 
@@ -125,34 +159,80 @@
       $isbnValido = validarISBN($isbn);
 
       if ($autorValido && $tituloValido && $edicionValida && $anioValido && $isbnValido) {
-          echo "<h2>Libro registrado exitosamente:</h2>";
-          echo "<p><strong>Autor:</strong> $autor</p>";
-          echo "<p><strong>Título del Libro:</strong> $titulo</p>";
-          echo "<p><strong>Número de Edición:</strong> $edicion</p>";
-          echo "<p><strong>Lugar de Publicación:</strong> $lugar</p>";
-          echo "<p><strong>Editorial:</strong> $editorial</p>";
-          echo "<p><strong>Año de Edición:</strong> $anio</p>";
-          echo "<p><strong>Número de Páginas:</strong> $paginas</p>";
-          echo "<p><strong>Notas:</strong> $notas</p>";
-          echo "<p><strong>ISBN:</strong> $isbn</p>";
+        $libro = new Libro($autor, $titulo, $edicion, $lugar, $editorial, $anio, $paginas, $notas, $isbn);
+
+        $Libros[] = $libro;
+
+        // Guardar la variable $Libros en la sesión
+        $_SESSION['Libros'] = $Libros;
+
+        echo "<div class='container m-3'>";
+        echo "<h2>Libro registrado exitosamente:</h2>";
+        echo "<p><strong>Autor:</strong> $libro->autor</p>";
+        echo "<p><strong>Título del Libro:</strong> $libro->titulo</p>";
+        echo "<p><strong>Número de Edición:</strong> $libro->edicion</p>";
+        echo "<p><strong>Lugar de Publicación:</strong> $libro->lugar</p>";
+        echo "<p><strong>Editorial:</strong> $libro->editorial</p>";
+        echo "<p><strong>Año de Edición:</strong> $libro->anio</p>";
+        echo "<p><strong>Número de Páginas:</strong> $libro->paginas</p>";
+        echo "<p><strong>Notas:</strong> $libro->notas</p>";
+        echo "<p><strong>ISBN:</strong> $libro->isbn</p>";
+        echo "</div>";
+
       } else {
-          echo "<h2>Error al registrar el libro:</h2>";
-          if (!$autorValido) {
-              echo "<p>El formato del autor es inválido.</p>";
-          }
-          if (!$tituloValido) {
-              echo "<p>El formato del título es inválido.</p>";
-          }
-          if (!$edicionValida) {
-              echo "<p>El formato del número de edición es inválido.</p>";
-          }
-          if (!$anioValido) {
-              echo "<p>El formato del año de edición es inválido.</p>";
-          }
-          if (!$isbnValido) {
-              echo "<p>El formato del ISBN es inválido.</p>";
-          }
+        echo "<div class='container m-3'>";
+        echo "<h2>Error al registrar el libro:</h2>";
+        if (!$autorValido) {
+            echo "<p>El formato del autor es inválido.</p>";
+        }
+        if (!$tituloValido) {
+            echo "<p>El formato del título es inválido.</p>";
+        }
+        if (!$edicionValida) {
+            echo "<p>El formato del número de edición es inválido.</p>";
+        }
+        if (!$anioValido) {
+            echo "<p>El formato del año de edición es inválido.</p>";
+        }
+        if (!$isbnValido) {
+            echo "<p>El formato del ISBN es inválido.</p>";
+        }
+        echo "</div>";
       }
+      echo "<div class='container m-3'>";
+      echo "<table class='table table-sm'>";
+      echo  "<thead>";
+      echo    "<tr>";
+      echo      "<td>Autor</td>";
+      echo      "<td>Título del Libro</td>";
+      echo      "<td>Número de Edición</td>";
+      echo      "<td>Lugar de Publicación</td>";
+      echo      "<td>Editorial</td>";
+      echo      "<td>Año de Edición</td>";
+      echo      "<td>Número de Páginas</td>";
+      echo      "<td>Notas:</td>";
+      echo      "<td>ISBN:</td>";
+      echo    "</tr>";
+      echo  "</thead>";
+      echo  "<tbody>";
+      
+      foreach ($Libros as $libro) {
+        echo "<tr>";
+        echo    "<td>$libro->autor</td>";
+        echo    "<td>$libro->titulo</td>";
+        echo    "<td>$libro->edicion</td>";
+        echo    "<td>$libro->lugar</td>";
+        echo    "<td>$libro->editorial</td>";
+        echo    "<td>$libro->anio</td>";
+        echo    "<td>$libro->paginas</td>";
+        echo    "<td>$libro->notas</td>";
+        echo    "<td>$libro->notas</td>";
+        echo  "</tr>";
+      }
+
+      echo  "</tbody>";
+      echo "</table>";
+      echo "</div>";
     }
   ?>
 </body>
