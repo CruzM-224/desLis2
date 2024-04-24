@@ -63,7 +63,7 @@
         <div id="descISBN" class="form-text">Identificador único para libros, previsto para uso comercial. Está compuesto por 13 dígitos de longitud divididos en cuatro partes cuyos número corresponden a: El código de país o lengua de origen, el editor, el número del artículo y un dígito de control.</div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
     </form>
   </div>
 
@@ -226,7 +226,7 @@
         echo    "<td>$libro->anio</td>";
         echo    "<td>$libro->paginas</td>";
         echo    "<td>$libro->notas</td>";
-        echo    "<td>$libro->notas</td>";
+        echo    "<td>$libro->isbn</td>";
         echo  "</tr>";
       }
 
