@@ -8,8 +8,6 @@ Facultad de Ingeniería y Escuela de Computación
 Materia:
 Lenguajes Interpretados en el Servidor LIS104
 
-Segundo Desafío Práctico
-
 Grupo:
 G04L
 
