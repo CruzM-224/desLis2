@@ -25,7 +25,7 @@
       <div class="mb-3">
         <label for="numEdicion" class="form-label">Numero de edicion</label>
         <input type="text" class="form-control" id="numEdicion" name="numEdicion" aria-describedby="descNumEdicion">
-        <div id="descNumEdicion" class="form-text">Caracteres superíndices, ej. [1<sup>er</sup>]</div>
+        <div id="descNumEdicion" class="form-text">Caracteres superíndices, ej. <sup>2</sup></div>
       </div>
 
       <div class="mb-3">
