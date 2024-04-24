@@ -70,7 +70,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <?php
-    // Definir la clase Libro antes de iniciar la sesión
+    // clase Libro
     class Libro {
         public $autor;
         public $titulo;
@@ -95,7 +95,7 @@
         }
     }
 
-    // Iniciar la sesión solo si no está activa, evitando la aparición del error
+    // Inicio de sesión si no está activa
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -104,44 +104,39 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-      // Validación de campos utilizando expresiones regulares
+      // Validación de campos
 
-      // Función para validar el formato del autor
+      // formato del autor
       function validarAutor($autor) {
-          // Expresión regular para el formato de autor
           $patron = "/^(?:VARIOS\s+AUTORES|AUTORES\s+VARIOS|\[?[A-ZÁÉÍÓÚÑ\s]+\s*,\s*[A-ZÁÉÍÓÚÑ\s]+\]?)$/i";
           return preg_match($patron, $autor);
       }
 
-      // Función para validar el formato del título del libro
+      // título del libro
       function validarTitulo($titulo) {
-          // Expresión regular para el formato del título
           $patron = "/^\[?[^\"]+\]?$/";
           return preg_match($patron, $titulo);
       }
 
-      // Función para validar el formato del número de edición
+      // número de edición
       function validarEdicion($edicion) {
-          // Expresión regular para el formato del número de edición
           $patron = "/^[\x{00B9}\x{00B2}\x{00B3}\x{2070}\x{2074}-\x{2079}]+$/u";
           return preg_match($patron, $edicion);
       }
 
-      // Función para validar el formato del año de edición
+      // año de edición
       function validarAnioEdicion($anio) {
-          // Expresión regular para el formato del año de edición
           $patron = "/^\([0-9]{4}\)$/"; // Año entre paréntesis, formato YYYY
           return preg_match($patron, $anio);
       }
 
-      // Función para validar el formato del ISBN
+      // ISBN
       function validarISBN($isbn) {
-          // Expresión regular para el formato del ISBN
           $patron = "/^[0-9]{13}$/"; // ISBN de 13 dígitos
           return preg_match($patron, $isbn);
       }
 
-      // Validar los campos
+      // Validacion de los campos
       $autor = $_POST["nombreAutor"];
       $titulo = $_POST["tituloLibro"];
       $edicion = $_POST["numEdicion"];
@@ -163,7 +158,7 @@
 
         $Libros[] = $libro;
 
-        // Guardar la variable $Libros en la sesión
+        // Guardado de la variable $Libros en la sesión
         $_SESSION['Libros'] = $Libros;
 
         echo "<div class='container m-3'>";
