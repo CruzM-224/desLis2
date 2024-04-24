@@ -123,7 +123,7 @@
       // Función para validar el formato del número de edición
       function validarEdicion($edicion) {
           // Expresión regular para el formato del número de edición
-          $patron = "/^[0-9]+<sup>er<\/sup>$/i";
+          $patron = "/^[\x{00B9}\x{00B2}\x{00B3}\x{2070}\x{2074}-\x{2079}]+$/u";
           return preg_match($patron, $edicion);
       }
 
